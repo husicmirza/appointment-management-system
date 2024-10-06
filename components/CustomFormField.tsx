@@ -15,7 +15,14 @@ import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { E164Number } from "libphonenumber-js/core";
 import { Checkbox } from "@/components/ui/checkbox";
-
+import DatePicker from "react-datepicker";
+import {
+  Select,
+  SelectContent,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import "react-datepicker/dist/react-datepicker.css";
 export enum FormFieldType {
   INPUT = "input",
   TEXTAREA = "textarea",
@@ -110,6 +117,47 @@ const RenderInput = ({
           </div>
         </FormControl>
       );
+    case FormFieldType.DATE_PICKER:
+      return (
+        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+          <Image
+            src={"/assets/icons/calendar.svg"}
+            alt={"icon"}
+            width={24}
+            height={24}
+            className="ml-2"
+          />
+          <FormControl>
+            <DatePicker
+              showTimeSelect={props.showTimeSelect ?? false}
+              selected={field.value}
+              onChange={(date) => field.onChange(date)}
+              timeInputLabel="Time:"
+              dateFormat={props.dateFormat ?? "MM/dd/yyyy"}
+              wrapperClassName="date-picker"
+            />
+          </FormControl>
+        </div>
+      );
+    case FormFieldType.SELECT:
+      return (
+        <FormControl>
+          <Select onValueChange={field.onChange} defaultValue={field.value}>
+            <FormControl>
+              <SelectTrigger className="shad-select-trigger">
+                <SelectValue placeholder={props.placeholder} />
+              </SelectTrigger>
+            </FormControl>
+            <SelectContent className="shad-select-content">
+              {props.children}
+            </SelectContent>
+          </Select>
+        </FormControl>
+      );
+    case FormFieldType.SKELETON:
+      return props.renderSkeleton ? props.renderSkeleton(field) : null;
+    default:
+      return null;
   }
 };
 
