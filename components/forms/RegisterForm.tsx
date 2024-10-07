@@ -54,7 +54,7 @@ const RegisterForm = ({ user }: { user: User }) => {
       const patientData = {
         ...values,
         userId: user.$id,
-        birthData: new Date(values.birthDate),
+        birthDate: new Date(values.birthDate),
         identificationDocument: formData,
       };
       //@ts-ignore
