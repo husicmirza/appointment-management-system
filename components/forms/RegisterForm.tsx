@@ -20,6 +20,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SelectItem } from "@/components/ui/select";
 import Image from "next/image";
 import FileUploader from "../FileUploader";
+import { registerPatient } from "@/lib/actions/patient.actions";
 
 const RegisterForm = ({ user }: { user: User }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,22 +36,39 @@ const RegisterForm = ({ user }: { user: User }) => {
     },
   });
 
-  //   async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
-  //     setIsLoading(true);
-
-  //     try {
-  //       //   const userData = { name, email, phone };
-  //       //   const user = await createUser(userData);
-  //       //   if (user) router.push(`/patients/${user.$id}/register`);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //     setIsLoading(false);
-  //   }
+  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
+    setIsLoading(true);
+    let formData;
+    if (
+      values.identificationDocument &&
+      values.identificationDocument.length > 0
+    ) {
+      const blobFile = new Blob([values.identificationDocument[0]], {
+        type: values.identificationDocument[0].type,
+      });
+      formData = new FormData();
+      formData.append("blobFile", blobFile);
+      formData.append("fileName", values.identificationDocument[0].name);
+    }
+    try {
+      const patientData = {
+        ...values,
+        userId: user.$id,
+        birthData: new Date(values.birthDate),
+        identificationDocument: formData,
+      };
+      //@ts-ignore
+      const patient = await registerPatient(patientData);
+      if (patient) router.push(`/patients/${user.$id}/new-appointment`);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  }
   return (
     <Form {...form}>
       <form
-        // onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-12 flex-1"
       >
         <section className="space-y-4">
