@@ -251,11 +251,11 @@
   }
 
   .shad-otp {
-    @apply w-full flex justify-between !important;
+    @apply w-full flex justify-between gap-4 !important;
   }
 
   .shad-otp-slot {
-    @apply text-36-bold justify-center flex border border-dark-500 rounded-lg size-16 gap-4 !important;
+    @apply text-36-bold justify-center flex border border-dark-500 rounded-lg size-16  !important;
   }
 
   .shad-alert-dialog {
