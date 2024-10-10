@@ -46,3 +46,9 @@ declare type CreateAppointmentParams = {
   status: Status;
   note: string | undefined;
 };
+declare type UpdateAppointmentParams = {
+  appointmentId: string;
+  userId: string;
+  appointment: Appointment;
+  type: string;
+};

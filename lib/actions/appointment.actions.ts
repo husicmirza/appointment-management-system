@@ -84,3 +84,25 @@ export const getAppointments = async () => {
     console.log(error);
   }
 };
+
+export const updateAppointment = async ({
+  appointmentId,
+  appointment,
+}: UpdateAppointmentParams) => {
+  try {
+    // Update appointment to scheduled -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#updateDocument
+    const updatedAppointment = await database.updateDocument(
+      DATABASE_ID!,
+      APPOINTMENT_COLLECTION_ID!,
+      appointmentId,
+      appointment
+    );
+
+    if (!updatedAppointment) throw new Error("Appointment not found");
+
+    revalidatePath("/admin");
+    return parseStringify(updatedAppointment);
+  } catch (error) {
+    console.error("An error occurred while scheduling an appointment:", error);
+  }
+};
