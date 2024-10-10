@@ -1,11 +1,13 @@
 import React from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
+
 interface SubmitButtonProps {
   isLoading: boolean;
   className?: string;
   children: React.ReactNode;
 }
+
 const SubmitButton = ({
   isLoading,
   className,

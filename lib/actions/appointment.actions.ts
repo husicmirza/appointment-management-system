@@ -90,7 +90,6 @@ export const updateAppointment = async ({
   appointment,
 }: UpdateAppointmentParams) => {
   try {
-    // Update appointment to scheduled -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#updateDocument
     const updatedAppointment = await database.updateDocument(
       DATABASE_ID!,
       APPOINTMENT_COLLECTION_ID!,
