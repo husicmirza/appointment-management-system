@@ -76,7 +76,7 @@ const PasskeyModal = () => {
             />
           </AlertDialogTitle>
           <AlertDialogDescription>
-            To access admin page, please enter the passkey.
+            To access admin page, please enter the 111111.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="flex justify-center flex-col">
